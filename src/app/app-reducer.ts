@@ -1,8 +1,5 @@
-import {Dispatch} from "redux";
 import {authAPI, RESULT_CODES} from "../api/api";
-import {handleServerAppError, handleServerNetworkError} from "../common/utils/errors-utils";
 import {setIsLoggedInAC} from "../features/Login/auth-reducer";
-import axios from 'axios';
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AppThunk} from "./store";
 
@@ -48,4 +45,5 @@ export const initializeAppTC = (): AppThunk => async (dispatch) => {
 }
 
 // type
+export type AppInitialStateType = typeof initialState
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'

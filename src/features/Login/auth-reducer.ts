@@ -20,11 +20,17 @@ const slice = createSlice({
         setIsLoggedIn(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
             state.isLoggedIn = action.payload.isLoggedIn
         },
+        setUserInfo(state, action: PayloadAction<{email: string | null, login: string | null, id: number | null}>) {
+            state.id = action.payload.id
+            state.login = action.payload.login
+            state.email = action.payload.email
+        }
     }
 })
 
 export const authReducer = slice.reducer
 export const setIsLoggedInAC = slice.actions.setIsLoggedIn
+export const setUserInfoAC = slice.actions.setUserInfo
 
 // thunks
 export const loginTC = (date: LoginParamsType): AppThunk => async (dispatch) => {
@@ -50,7 +56,7 @@ export const logoutTC = (): AppThunk => async (dispatch) => {
         if (res.data.resultCode === RESULT_CODES.succeeded) {
             dispatch(setIsLoggedInAC({isLoggedIn: false}))
             dispatch(setAppStatusAC({status: "succeeded"}))
-            // dispatch(setUserInAC({email: null, login: null, id: null}))
+            // dispatch(setUserInfoAC({email: null, login: null, id: null}))
         } else {
             handleServerAppError(res.data, dispatch)
         }
@@ -62,4 +68,4 @@ export const logoutTC = (): AppThunk => async (dispatch) => {
 }
 
 // type
-type InitialStateType = typeof initialState
+export type AuthInitialStateType = typeof initialState
