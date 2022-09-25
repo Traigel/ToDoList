@@ -1,7 +1,7 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import React from 'react';
 import {App} from "./App";
-import { StoreProviderDecorator } from '../redux/StoreProviderDecorator';
+import { StoreProviderDecorator } from './StoreProviderDecorator';
 
 export default {                                    //по дефолту создаётся компонент в StoryBook
     title: 'ToDoList/App',                        //имя папки и в ней раздел

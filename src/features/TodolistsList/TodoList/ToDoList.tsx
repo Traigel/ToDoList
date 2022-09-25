@@ -1,8 +1,8 @@
 import React, {memo, useCallback, useEffect} from "react"
 import style from './ToDoList.module.css';
 import {Tasks} from "./Tasks/Tasks";
-import {NewTitle} from "../../../components/NewTitle/NewTitle";
-import {TaskTitle} from "../../../components/TaskTitle/TaskTitle";
+import {NewTitle} from "../../../common/components/NewTitle/NewTitle";
+import {TaskTitle} from "../../../common/components/TaskTitle/TaskTitle";
 import Delete from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton/IconButton";
 import Container from "@mui/material/Container/Container";
@@ -14,11 +14,11 @@ import {
     FilterType,
     ToDoListDomainType,
     updateToDoListTC,
-} from "../../../reducers/todoList-reducer";
-import {useDispatch} from "react-redux";
-import {AppDispatch, useAppSelector} from "../../../redux/store";
-import {createTaskTC, getTasksTC,} from "../../../reducers/tasks-reducer";
+} from "../todoList-reducer";
+import {createTaskTC, getTasksTC,} from "./Tasks/tasks-reducer";
 import {TASK_STATUS} from "../../../api/api";
+import {useAppDispatch} from "../../../common/hooks/useAppDispatch";
+import {useAppSelector} from "../../../common/hooks/useAppSelector";
 
 type TodoListType = {
     todoList: ToDoListDomainType
@@ -30,11 +30,11 @@ export const ToDoList = memo((props: TodoListType) => {
 
     let tasks = useAppSelector(state => state.tasks[id])
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const dispatch = useDispatch<AppDispatch>()
+    const dispatch = useAppDispatch()
 
     const filterHandler = (filterItem: FilterType) => {
         if (filterItem === filter) return
-        else dispatch(changesFilterAC(id, filterItem))
+        else dispatch(changesFilterAC({toDoListID: id, filterItem}))
     }
 
     const newTitleHandler = useCallback((newTitle: string) => dispatch(createTaskTC(id, newTitle)), [dispatch])

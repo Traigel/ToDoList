@@ -1,16 +1,17 @@
 import React, {useEffect} from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from "@mui/material/Paper";
-import {AppDispatch, useAppSelector} from '../../redux/store';
 import {ToDoList} from './TodoList/ToDoList';
-import {getTodoListTC} from "../../reducers/todoList-reducer";
+import {getTodoListTC} from "./todoList-reducer";
 import {useDispatch} from "react-redux";
 import {Navigate} from "react-router-dom";
+import {useAppDispatch} from "../../common/hooks/useAppDispatch";
+import {useAppSelector} from "../../common/hooks/useAppSelector";
 
 
 export const TodolistsList = () => {
 
-    const dispatch = useDispatch<AppDispatch>()
+    const dispatch = useAppDispatch()
     const todoLists = useAppSelector(state => state.todoList)
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 

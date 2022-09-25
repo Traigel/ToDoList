@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {setAppErrorAC, setAppStatusAC} from "../../reducers/app-reducer";
+import {setAppErrorAC, setAppStatusAC} from "../../app/app-reducer";
 import {ResponseType} from "../../api/api";
 
 export const handleServerNetworkError = (error: string, dispatch: Dispatch) => {

@@ -1,9 +1,9 @@
 import {v1} from "uuid";
 import {
     tasksReducer, TasksTodoListType
-} from "./tasks-reducer";
+} from "./TodoList/Tasks/tasks-reducer";
 import {addTodoListAC, ToDoListDomainType, todoListReducer} from "./todoList-reducer";
-import {TASK_PRIORITIES, TASK_STATUS, ToDoListType} from "../api/api";
+import {TASK_PRIORITIES, TASK_STATUS, ToDoListType} from "../../api/api";
 
 const toDoListID_1 = v1();
 const toDoListID_2 = v1();
@@ -85,7 +85,7 @@ beforeEach(() => {
 })
 
 test('new todo list and task', () => {
-    const action = addTodoListAC(newTodoList)
+    const action = addTodoListAC({toDoList: newTodoList})
     const todoListReducer1 = todoListReducer(todoList, action)
     const tasksReducer1 = tasksReducer(tasks, action)
 

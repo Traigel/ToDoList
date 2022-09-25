@@ -1,22 +1,21 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
-import {createToDoListTC} from "../reducers/todoList-reducer";
+import {createToDoListTC} from "../features/TodolistsList/todoList-reducer";
 import {AppBarComponent} from "../features/AppBar/AppBar";
-import {CustomizedSnackbars} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
-import {useDispatch} from "react-redux";
-import {AppDispatch, useAppSelector} from "../redux/store";
 import {Login} from "../features/Login/Login";
 import {Navigate, Route, Routes} from "react-router-dom";
 import Container from "@mui/material/Container/Container";
-import {initializeAppTC} from "../reducers/app-reducer";
+import {initializeAppTC} from "./app-reducer";
 import CircularProgress from "@mui/material/CircularProgress";
-import {Error404} from "../components/Error404/Error404";
-
+import {useAppDispatch} from "../common/hooks/useAppDispatch";
+import {useAppSelector} from "../common/hooks/useAppSelector";
+import {Error404} from '../common/components/Error404/Error404';
+import {CustomizedSnackbars} from "../common/components/ErrorSnackbar/ErrorSnackbar";
 
 export const App = () => {
 
-    const dispatch = useDispatch<AppDispatch>()
+    const dispatch = useAppDispatch()
     const isInitialized = useAppSelector(state => state.app.isInitialized)
 
     const newTodoListHandler = useCallback((titleValue: string) => dispatch(createToDoListTC(titleValue)), [dispatch])

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {memo} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -6,15 +7,14 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import {NewTitle} from "../../components/NewTitle/NewTitle";
+import {NewTitle} from "../../common/components/NewTitle/NewTitle";
 import style from './AppBar.module.css'
 import Container from "@mui/material/Container/Container";
 import Grid from "@mui/material/Grid";
-import {memo} from "react";
 import LinearProgress from "@mui/material/LinearProgress";
-import {AppDispatch, useAppSelector} from "../../redux/store";
-import {useDispatch} from "react-redux";
-import {logoutTC} from "../../reducers/auth-reducer";
+import {logoutTC} from "../Login/auth-reducer";
+import {useAppDispatch} from "../../common/hooks/useAppDispatch";
+import {useAppSelector} from "../../common/hooks/useAppSelector";
 
 type ButtonAppBarPropsType = {
     newTitleCallBack: (title: string) => void
@@ -22,7 +22,7 @@ type ButtonAppBarPropsType = {
 
 export const AppBarComponent = memo((props: ButtonAppBarPropsType) => {
 
-    const dispatch = useDispatch<AppDispatch>()
+    const dispatch = useAppDispatch()
     const status = useAppSelector(state => state.app.status)
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const login = useAppSelector(state => state.auth.login)

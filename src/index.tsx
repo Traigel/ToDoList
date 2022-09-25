@@ -4,7 +4,7 @@ import './index.css';
 import {App} from './app/App';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from "react-redux";
-import {store} from './redux/store';
+import {store} from './app/store';
 import {HashRouter} from "react-router-dom";
 
 createRoot.render(

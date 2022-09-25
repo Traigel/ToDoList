@@ -6,7 +6,7 @@ import {
     todoListNewTitleAC,
     todoListReducer,
 } from "./todoList-reducer";
-import {ToDoListType} from "../api/api";
+import {ToDoListType} from "../../api/api";
 
 const toDoListID_1 = v1();
 const toDoListID_2 = v1();
@@ -42,24 +42,24 @@ beforeEach(() => {
 })
 
 test('filter changes', () => {
-    const todoListReducer1 = todoListReducer(todoLists, changesFilterAC(toDoListID_1, "active"))
-    const todoListReducer2 = todoListReducer(todoLists, changesFilterAC(toDoListID_2, "completed"))
+    const todoListReducer1 = todoListReducer(todoLists, changesFilterAC({toDoListID: toDoListID_1, filterItem: "active"}))
+    const todoListReducer2 = todoListReducer(todoLists, changesFilterAC({toDoListID: toDoListID_2, filterItem: "completed"}))
     expect(todoListReducer1[0].filter).toBe("active")
     expect(todoListReducer2[1].filter).toBe("completed")
 })
 
 test('add toDuList', () => {
-    const todoListReducer1 = todoListReducer(todoLists, addTodoListAC(newTodoList))
+    const todoListReducer1 = todoListReducer(todoLists, addTodoListAC({toDoList: newTodoList}))
     expect(todoListReducer1.length).toBe(3)
 })
 
 test('change toDoList new title', () => {
-    const todoListReducer1 = todoListReducer(todoLists, todoListNewTitleAC(toDoListID_1, "New Name ToDoList"))
+    const todoListReducer1 = todoListReducer(todoLists, todoListNewTitleAC({todolistId: toDoListID_1, title: "New Name ToDoList"}))
     expect(todoListReducer1[0].title).toBe('New Name ToDoList')
 })
 
 test('delete toDoList', () => {
-    const todoListReducer1 = todoListReducer(todoLists, deleteTodoListAC(toDoListID_1))
+    const todoListReducer1 = todoListReducer(todoLists, deleteTodoListAC({todolistId: toDoListID_1}))
     expect(todoListReducer1[0].id).not.toBe(toDoListID_1)
     expect(todoListReducer1.length).toBe(1)
 })

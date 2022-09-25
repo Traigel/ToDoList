@@ -1,32 +1,33 @@
-import {authAPI, LoginParamsType, MeType, RESULT_CODES} from "../api/api";
+import {authAPI, LoginParamsType, MeType, RESULT_CODES} from "../../api/api";
 import {Dispatch} from "redux";
-import {setAppStatusAC} from "./app-reducer";
-import {handleServerAppError, handleServerNetworkError} from "../components/utils/errors-utils";
+import {setAppStatusAC} from "../../app/app-reducer";
+import {handleServerAppError, handleServerNetworkError} from "../../common/utils/errors-utils";
 import axios from 'axios';
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {AppThunk} from "../../app/store";
 
-const initialState: InitialStateType = {
+const initialState = {
     isLoggedIn: false,  // если true (залогинены) показывается TodoLists
-    id: null,
-    login: null,
-    email: null
+    id: null as number | null,
+    login: null as string | null,
+    email: null as string | null
 }
 
 const slice = createSlice({
     name: 'auth',
-    initialState: initialState,
+    initialState,
     reducers: {
-        setIsLoggedInAC(state, action: PayloadAction<{isLoggedIn: boolean}>) {
+        setIsLoggedIn(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
             state.isLoggedIn = action.payload.isLoggedIn
         },
     }
 })
 
 export const authReducer = slice.reducer
-export const setIsLoggedInAC = slice.actions.setIsLoggedInAC
+export const setIsLoggedInAC = slice.actions.setIsLoggedIn
 
 // thunks
-export const loginTC = (date: LoginParamsType) => async (dispatch: Dispatch) => {
+export const loginTC = (date: LoginParamsType): AppThunk => async (dispatch) => {
     dispatch(setAppStatusAC({status: "loading"}))
     try {
         const res = await authAPI.login(date)
@@ -42,7 +43,7 @@ export const loginTC = (date: LoginParamsType) => async (dispatch: Dispatch) => 
         }
     }
 }
-export const logoutTC = () => async (dispatch: Dispatch) => {
+export const logoutTC = (): AppThunk => async (dispatch) => {
     dispatch(setAppStatusAC({status: "loading"}))
     try {
         const res = await authAPI.logout()
@@ -61,9 +62,4 @@ export const logoutTC = () => async (dispatch: Dispatch) => {
 }
 
 // type
-type InitialStateType = {
-    isLoggedIn: boolean
-    id: number | null
-    email: string | null
-    login: string | null
-}
+type InitialStateType = typeof initialState

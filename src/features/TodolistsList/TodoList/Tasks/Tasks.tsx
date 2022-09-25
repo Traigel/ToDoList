@@ -1,13 +1,12 @@
 import React, {ChangeEvent, memo} from 'react';
 import styles from './Tasks.module.css'
-import {TaskTitle} from "../../../../components/TaskTitle/TaskTitle";
+import {TaskTitle} from "../../../../common/components/TaskTitle/TaskTitle";
 import IconButton from '@mui/material/IconButton/IconButton';
 import Delete from "@mui/icons-material/Delete";
 import {Checkbox} from "@mui/material";
-import {deleteTaskTC, TasksDomainType, updateTaskTC} from '../../../../reducers/tasks-reducer';
-import {useDispatch} from "react-redux";
+import {deleteTaskTC, TasksDomainType, updateTaskTC} from './tasks-reducer';
 import {TASK_STATUS} from "../../../../api/api";
-import {AppDispatch} from "../../../../redux/store";
+import {useAppDispatch} from "../../../../common/hooks/useAppDispatch";
 
 type BodyListType = {
     tasks: TasksDomainType
@@ -16,7 +15,7 @@ type BodyListType = {
 
 export const Tasks = memo((props: BodyListType) => {
 
-    const dispatch = useDispatch<AppDispatch>()
+    const dispatch = useAppDispatch()
 
     const deleteTitleHandler = () => {
         dispatch(deleteTaskTC(props.todoListID, props.tasks.id))
