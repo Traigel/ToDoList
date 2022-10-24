@@ -1,6 +1,6 @@
 {
   "name": "test-app",
-  "homepage": "https://Traihel.github.io/ToDoList-TS-Redux-Toolkit",
+  "homepage": "https://Traihel.github.io/ToDoList",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

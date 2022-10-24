@@ -1,6 +1,5 @@
 # ToDoList project
-This is a ToDo-List project, rewritten in Redux-Toolkit
 
-A list of things you need to do or want to do. When a task is completed, it is usually crossed off the list.
+Service and set of software for task management. When a task is completed, it is usually crossed off the list. Tasks can contain notes. Tasks can be placed in projects, sorted by filters, labeled, edited.
 
-https://traihel.github.io/ToDoList-TS/
+https://Traihel.github.io/ToDoList
