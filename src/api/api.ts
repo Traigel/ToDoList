@@ -55,9 +55,14 @@ export const authAPI = {
 // types
 export type ResponseType<T = {}> = {
     messages: string[];
-    fieldsErrors: string[];
+    fieldsErrors: FieldsErrorsType[];
     resultCode: number;
     data: T;
+}
+
+export type FieldsErrorsType = {
+    field: string
+    error: string
 }
 
 export type ToDoListType = {

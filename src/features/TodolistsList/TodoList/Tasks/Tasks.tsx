@@ -18,7 +18,7 @@ export const Tasks = memo((props: BodyListType) => {
     const dispatch = useAppDispatch()
 
     const deleteTitleHandler = () => {
-        dispatch(deleteTaskTC(props.todoListID, props.tasks.id))
+        dispatch(deleteTaskTC({todolistId: props.todoListID, taskId: props.tasks.id}))
     }
 
     const isDoneTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
