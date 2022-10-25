@@ -24,11 +24,11 @@ export const Tasks = memo((props: BodyListType) => {
     const isDoneTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked;
         const status = newIsDoneValue ? TASK_STATUS.Completed : TASK_STATUS.New
-        dispatch(updateTaskTC(props.todoListID, props.tasks.id, {status}))
+        dispatch(updateTaskTC({todolistId: props.todoListID, taskId: props.tasks.id, model: {status}}))
     }
 
     const taskNewTitleHandler = (title: string) => {
-        dispatch(updateTaskTC(props.todoListID, props.tasks.id, {title}))
+        dispatch(updateTaskTC({todolistId: props.todoListID, taskId: props.tasks.id, model: {title}}))
     }
 
     return (

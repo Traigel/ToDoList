@@ -1,4 +1,4 @@
-import {AuthInitialStateType, authReducer, setIsLoggedInAC, setUserInfoAC} from "./auth-reducer";
+import {AuthInitialStateType, authReducer, loginTC, logoutTC, setUserInfoAC} from "./auth-reducer";
 
 
 let initialState: AuthInitialStateType
@@ -12,9 +12,16 @@ beforeEach(() => {
     }
 })
 
-test('set is logged in', () => {
-    const testAppReducer = authReducer(initialState, setIsLoggedInAC({isLoggedIn: true}))
+test('set is login', () => {
+    const action = loginTC.fulfilled(undefined, 'requestId', {email: '123', password: '', rememberMe: false})
+    const testAppReducer = authReducer(initialState, action)
     expect(testAppReducer.isLoggedIn).toBe(true)
+})
+
+test('set is logout', () => {
+    const action = logoutTC.fulfilled(undefined, 'requestId', undefined)
+    const testAppReducer = authReducer(initialState, action)
+    expect(testAppReducer.isLoggedIn).toBe(false)
 })
 
 test('set user info', () => {

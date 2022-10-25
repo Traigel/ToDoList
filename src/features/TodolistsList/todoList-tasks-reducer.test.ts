@@ -1,8 +1,6 @@
 import {v1} from "uuid";
-import {
-    tasksReducer, TasksTodoListType
-} from "./TodoList/Tasks/tasks-reducer";
-import {addTodoListAC, ToDoListDomainType, todoListReducer} from "./todoList-reducer";
+import {tasksReducer, TasksTodoListType} from "./TodoList/Tasks/tasks-reducer";
+import {createToDoListTC, ToDoListDomainType, todoListReducer} from "./todoList-reducer";
 import {TASK_PRIORITIES, TASK_STATUS, ToDoListType} from "../../api/api";
 
 const toDoListID_1 = v1();
@@ -85,10 +83,9 @@ beforeEach(() => {
 })
 
 test('new todo list and task', () => {
-    const action = addTodoListAC({toDoList: newTodoList})
-    const todoListReducer1 = todoListReducer(todoList, action)
-    const tasksReducer1 = tasksReducer(tasks, action)
-
-    expect(todoListReducer1.length).toBe(3)
-    expect(tasksReducer1[toDoListID_3]).toStrictEqual([])
+    const action = createToDoListTC.fulfilled(newTodoList, 'requestId', {titleValue: 'New ToDoList'})
+    const todoListReducerTest = todoListReducer(todoList, action)
+    const tasksReducerTest = tasksReducer(tasks, action)
+    expect(todoListReducerTest.length).toBe(3)
+    expect(tasksReducerTest[toDoListID_3]).toStrictEqual([])
 })

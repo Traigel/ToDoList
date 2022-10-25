@@ -18,7 +18,7 @@ export const App = () => {
     const dispatch = useAppDispatch()
     const isInitialized = useAppSelector(state => state.app.isInitialized)
 
-    const newTodoListHandler = useCallback((titleValue: string) => dispatch(createToDoListTC(titleValue)), [dispatch])
+    const newTodoListHandler = useCallback((titleValue: string) => dispatch(createToDoListTC({titleValue})), [dispatch])
 
     useEffect(() => {
         dispatch(initializeAppTC())

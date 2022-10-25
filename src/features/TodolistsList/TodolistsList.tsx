@@ -3,7 +3,6 @@ import Grid from '@mui/material/Grid';
 import Paper from "@mui/material/Paper";
 import {ToDoList} from './TodoList/ToDoList';
 import {getTodoListTC} from "./todoList-reducer";
-import {useDispatch} from "react-redux";
 import {Navigate} from "react-router-dom";
 import {useAppDispatch} from "../../common/hooks/useAppDispatch";
 import {useAppSelector} from "../../common/hooks/useAppSelector";
@@ -19,7 +18,7 @@ export const TodolistsList = () => {
         if (!isLoggedIn) {
             return
         }
-        dispatch(getTodoListTC)
+        dispatch(getTodoListTC())
     }, [])
 
     if (!isLoggedIn) {

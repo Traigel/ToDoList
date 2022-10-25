@@ -1,10 +1,8 @@
 import {v1} from "uuid";
 import {
-    addTodoListAC,
-    changesFilterAC,
-    deleteTodoListAC, ToDoListDomainType,
-    todoListNewTitleAC,
-    todoListReducer,
+    changesFilterAC, createToDoListTC,
+    deleteToDoListTC, ToDoListDomainType,
+    todoListReducer, updateToDoListTC,
 } from "./todoList-reducer";
 import {ToDoListType} from "../../api/api";
 
@@ -42,24 +40,36 @@ beforeEach(() => {
 })
 
 test('filter changes', () => {
-    const todoListReducer1 = todoListReducer(todoLists, changesFilterAC({toDoListID: toDoListID_1, filterItem: "active"}))
-    const todoListReducer2 = todoListReducer(todoLists, changesFilterAC({toDoListID: toDoListID_2, filterItem: "completed"}))
+    const todoListReducer1 = todoListReducer(todoLists, changesFilterAC({
+        toDoListID: toDoListID_1,
+        filterItem: "active"
+    }))
+    const todoListReducer2 = todoListReducer(todoLists, changesFilterAC({
+        toDoListID: toDoListID_2,
+        filterItem: "completed"
+    }))
     expect(todoListReducer1[0].filter).toBe("active")
     expect(todoListReducer2[1].filter).toBe("completed")
 })
 
 test('add toDuList', () => {
-    const todoListReducer1 = todoListReducer(todoLists, addTodoListAC({toDoList: newTodoList}))
-    expect(todoListReducer1.length).toBe(3)
+    const action = createToDoListTC.fulfilled(newTodoList, 'requestId', {titleValue: 'New ToDoList'})
+    const todoListReducerTest = todoListReducer(todoLists, action)
+    expect(todoListReducerTest.length).toBe(3)
 })
 
 test('change toDoList new title', () => {
-    const todoListReducer1 = todoListReducer(todoLists, todoListNewTitleAC({todolistId: toDoListID_1, title: "New Name ToDoList"}))
-    expect(todoListReducer1[0].title).toBe('New Name ToDoList')
+    const action = updateToDoListTC.fulfilled({
+        todolistId: toDoListID_1,
+        title: "New Name ToDoList"
+    }, 'requestId', {todolistId: toDoListID_1, title: "New Name ToDoList"})
+    const todoListReducerTest = todoListReducer(todoLists, action)
+    expect(todoListReducerTest[0].title).toBe('New Name ToDoList')
 })
 
 test('delete toDoList', () => {
-    const todoListReducer1 = todoListReducer(todoLists, deleteTodoListAC({todolistId: toDoListID_1}))
-    expect(todoListReducer1[0].id).not.toBe(toDoListID_1)
-    expect(todoListReducer1.length).toBe(1)
+    const action = deleteToDoListTC.fulfilled({todolistId: toDoListID_1}, 'requestId', {todolistId: toDoListID_1})
+    const todoListReducerTest = todoListReducer(todoLists, action)
+    expect(todoListReducerTest[0].id).not.toBe(toDoListID_1)
+    expect(todoListReducerTest.length).toBe(1)
 })

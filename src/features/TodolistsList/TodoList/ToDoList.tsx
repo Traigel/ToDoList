@@ -37,11 +37,14 @@ export const ToDoList = memo((props: TodoListType) => {
         else dispatch(changesFilterAC({toDoListID: id, filterItem}))
     }
 
-    const newTitleHandler = useCallback((newTitle: string) => dispatch(createTaskTC(id, newTitle)), [dispatch])
+    const newTitleHandler = useCallback((newTitle: string) => dispatch(createTaskTC({
+        todolistId: id,
+        title: newTitle
+    })), [dispatch])
 
-    const deleteTodoListHandler = () => dispatch(deleteToDoListTC(id))
+    const deleteTodoListHandler = () => dispatch(deleteToDoListTC({todolistId: id}))
 
-    const todoListNewTitleHandler = (newTitle: string) => dispatch(updateToDoListTC(id, newTitle))
+    const todoListNewTitleHandler = (newTitle: string) => dispatch(updateToDoListTC({todolistId: id, title: newTitle}))
 
     if (filter === 'active') tasks = tasks.filter(el => el.status === TASK_STATUS.New)
     if (filter === 'completed') tasks = tasks.filter(el => el.status === TASK_STATUS.Completed)
