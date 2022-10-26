@@ -1,7 +1,8 @@
 import {v1} from "uuid";
 import {tasksReducer, TasksTodoListType} from "./TodoList/Tasks/tasks-reducer";
-import {createToDoListTC, ToDoListDomainType, todoListReducer} from "./todoList-reducer";
+import {ToDoListDomainType, todoListReducer} from "./todoList-reducer";
 import {TASK_PRIORITIES, TASK_STATUS, ToDoListType} from "../../api/api";
+import {createToDoListTC} from './todoLists-actions';
 
 const toDoListID_1 = v1();
 const toDoListID_2 = v1();

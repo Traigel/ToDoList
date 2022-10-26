@@ -1,22 +1,23 @@
 import React, {useCallback, useEffect} from 'react';
-import './App.css';
-import {createToDoListTC} from "../features/TodolistsList/todoList-reducer";
+import styles from './App.module.css';
 import {AppBarComponent} from "../features/AppBar/AppBar";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
-import {Login} from "../features/Login/Login";
+import {Login} from "../features/Auth/Login";
 import {Navigate, Route, Routes} from "react-router-dom";
 import Container from "@mui/material/Container/Container";
 import {initializeAppTC} from "./app-reducer";
 import CircularProgress from "@mui/material/CircularProgress";
 import {useAppDispatch} from "../common/hooks/useAppDispatch";
-import {useAppSelector} from "../common/hooks/useAppSelector";
 import {Error404} from '../common/components/Error404/Error404';
 import {CustomizedSnackbars} from "../common/components/ErrorSnackbar/ErrorSnackbar";
+import {useSelector} from 'react-redux';
+import {appSelectors} from './index';
+import {createToDoListTC} from '../features/TodolistsList/todoLists-actions';
 
 export const App = () => {
 
     const dispatch = useAppDispatch()
-    const isInitialized = useAppSelector(state => state.app.isInitialized)
+    const isInitialized = useSelector(appSelectors.selectIsInitialized)
 
     const newTodoListHandler = useCallback((titleValue: string) => dispatch(createToDoListTC({titleValue})), [dispatch])
 
@@ -32,10 +33,10 @@ export const App = () => {
     }
 
     return <>
-        <div className="App">
+        <div className={styles.appComponent}>
+            <AppBarComponent newTitleCallBack={newTodoListHandler}/>
+            <CustomizedSnackbars/>
             <Container fixed>
-                <AppBarComponent newTitleCallBack={newTodoListHandler}/>
-                <CustomizedSnackbars/>
                 <Routes>
                     <Route path={'/'} element={<TodolistsList/>}/>
                     <Route path={'/login'} element={<Login/>}/>

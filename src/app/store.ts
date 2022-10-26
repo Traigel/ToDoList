@@ -3,7 +3,7 @@ import {todoListReducer} from "../features/TodolistsList/todoList-reducer";
 import {tasksReducer} from "../features/TodolistsList/TodoList/Tasks/tasks-reducer";
 import thunk, {ThunkAction} from 'redux-thunk'
 import {appReducer} from "./app-reducer";
-import {authReducer} from "../features/Login/auth-reducer";
+import {authReducer} from "../features/Auth/auth-reducer";
 import {configureStore} from "@reduxjs/toolkit";
 
 const rootReducer = combineReducers({

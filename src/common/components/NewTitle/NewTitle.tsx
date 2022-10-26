@@ -5,7 +5,7 @@ import {Button, TextField} from "@mui/material";
 export type ColorButtonType = "success" | "secondary" | "error"
 
 type NewTitleType = {
-    newTitleCallBack: (title: string) => void
+    newTitleCallBack: (title: string) => Promise<any>
     classNameButton?: string
     classNameInput?: string
     colorButton?: ColorButtonType
@@ -27,11 +27,15 @@ export const NewTitle = memo((props: NewTitleType) => {
         } else setError(true)
     }
 
-    const onClickButtonHandler = () => {
+    const onClickButtonHandler = async () => {
         const titleReplace = title.replace(/^ +| +$|( ) +/g, "$1")
         if (titleReplace !== '') {
-            props.newTitleCallBack(titleReplace)
-            setTitle('')
+            try {
+               await props.newTitleCallBack(titleReplace)
+                setTitle('')
+            } catch (error) {
+                setError(true)
+            }
         } else setError(true)
     }
 

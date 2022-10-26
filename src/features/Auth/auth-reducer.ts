@@ -1,10 +1,8 @@
-import {authAPI, FieldsErrorsType, LoginParamsType, MeType, RESULT_CODES} from "../../api/api";
-import {Dispatch} from "redux";
-import {setAppStatusAC} from "../../app/app-reducer";
-import {handleServerAppError, handleServerNetworkError} from "../../common/utils/errors-utils";
-import axios from 'axios';
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {AppThunk} from "../../app/store";
+import {authAPI, FieldsErrorsType, LoginParamsType, RESULT_CODES} from '../../api/api';
+import {setAppStatusAC} from '../../app/app-reducer';
+import {handleServerAppError, handleServerNetworkError} from '../../common/utils/errors-utils';
+import axios from 'axios';
 
 const initialState = {
     isLoggedIn: false,  // если true (залогинены) показывается TodoLists
@@ -33,7 +31,6 @@ export const loginTC = createAsyncThunk<undefined, LoginParamsType, { rejectValu
         return thunkAPI.rejectWithValue({errors: ['Error'], fieldsErrors: undefined})
     }
 })
-
 export const logoutTC = createAsyncThunk('auth/logout', async (param, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: "loading"}))
     try {
@@ -55,8 +52,13 @@ export const logoutTC = createAsyncThunk('auth/logout', async (param, thunkAPI) 
     }
 })
 
+export const asyncActions = {
+    loginTC,
+    logoutTC
+}
+
 // Slice
-const slice = createSlice({
+export const slice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
@@ -70,12 +72,13 @@ const slice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(loginTC.fulfilled, (state) => {
-            state.isLoggedIn = true
-        })
-        builder.addCase(logoutTC.fulfilled, (state) => {
-            state.isLoggedIn = false
-        })
+        builder
+            .addCase(loginTC.fulfilled, (state) => {
+                state.isLoggedIn = true
+            })
+            .addCase(logoutTC.fulfilled, (state) => {
+                state.isLoggedIn = false
+            })
     },
 })
 

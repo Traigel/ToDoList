@@ -1,6 +1,5 @@
 import {AuthInitialStateType, authReducer, loginTC, logoutTC, setUserInfoAC} from "./auth-reducer";
 
-
 let initialState: AuthInitialStateType
 
 beforeEach(() => {

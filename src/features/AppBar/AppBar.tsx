@@ -12,20 +12,21 @@ import style from './AppBar.module.css'
 import Container from "@mui/material/Container/Container";
 import Grid from "@mui/material/Grid";
 import LinearProgress from "@mui/material/LinearProgress";
-import {logoutTC} from "../Login/auth-reducer";
 import {useAppDispatch} from "../../common/hooks/useAppDispatch";
-import {useAppSelector} from "../../common/hooks/useAppSelector";
+import {useSelector} from 'react-redux';
+import {appSelectors} from '../../app';
+import {authSelectors} from '../Auth';
+import { logoutTC } from '../Auth/auth-reducer';
 
 type ButtonAppBarPropsType = {
-    newTitleCallBack: (title: string) => void
+    newTitleCallBack: (title: string) => Promise<any>
 }
 
 export const AppBarComponent = memo((props: ButtonAppBarPropsType) => {
 
     const dispatch = useAppDispatch()
-    const status = useAppSelector(state => state.app.status)
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const login = useAppSelector(state => state.auth.login)
+    const status = useSelector(appSelectors.selectStatus)
+    const isLoggedIn = useSelector(authSelectors.isLoggedIn)
 
     const LogoutHandler = () => {
         dispatch(logoutTC())

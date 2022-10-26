@@ -24,7 +24,7 @@ export default {                    //по дефолту создаётся к�
 
 const Template: ComponentStory<typeof NewTitle> = (args) => <NewTitle {...args}/>
 
-export const TitlePrimary = Template.bind({});
-TitlePrimary.args = {
-    newTitleCallBack: action('Button clicked')
-}
+// export const TitlePrimary = Template.bind({});
+// TitlePrimary.args = {
+//     newTitleCallBack: action('Button clicked')
+// }

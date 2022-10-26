@@ -1,10 +1,10 @@
 import {v1} from "uuid";
 import {
-    changesFilterAC, createToDoListTC,
-    deleteToDoListTC, ToDoListDomainType,
-    todoListReducer, updateToDoListTC,
+    changesFilterAC, ToDoListDomainType,
+    todoListReducer,
 } from "./todoList-reducer";
 import {ToDoListType} from "../../api/api";
+import {createToDoListTC, deleteToDoListTC, updateToDoListTC} from './todoLists-actions';
 
 const toDoListID_1 = v1();
 const toDoListID_2 = v1();

@@ -1,12 +1,10 @@
 import {v1} from "uuid";
 import {
-    createTaskTC,
-    deleteTaskTC,
-    getTasksTC,
-    tasksReducer, TasksTodoListType, updateTaskTC
+    tasksReducer, TasksTodoListType
 } from "./tasks-reducer";
 import {TASK_PRIORITIES, TASK_STATUS, TasksType} from "../../../../api/api";
-import {deleteToDoListTC} from "../../todoList-reducer";
+import {createTaskTC, deleteTaskTC, getTasksTC, updateTaskTC} from './tasks-actions';
+import {deleteToDoListTC} from '../../todoLists-actions';
 
 const toDoListID_1 = v1();
 const toDoListID_2 = v1();

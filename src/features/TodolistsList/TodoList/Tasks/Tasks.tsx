@@ -4,9 +4,10 @@ import {TaskTitle} from "../../../../common/components/TaskTitle/TaskTitle";
 import IconButton from '@mui/material/IconButton/IconButton';
 import Delete from "@mui/icons-material/Delete";
 import {Checkbox} from "@mui/material";
-import {deleteTaskTC, TasksDomainType, updateTaskTC} from './tasks-reducer';
+import {TasksDomainType} from './tasks-reducer';
 import {TASK_STATUS} from "../../../../api/api";
-import {useAppDispatch} from "../../../../common/hooks/useAppDispatch";
+import {useActions} from '../../../../common/hooks/useActions';
+import {tasksActions} from './index';
 
 type BodyListType = {
     tasks: TasksDomainType
@@ -15,20 +16,20 @@ type BodyListType = {
 
 export const Tasks = memo((props: BodyListType) => {
 
-    const dispatch = useAppDispatch()
+    const {deleteTaskTC, updateTaskTC} = useActions(tasksActions)
 
     const deleteTitleHandler = () => {
-        dispatch(deleteTaskTC({todolistId: props.todoListID, taskId: props.tasks.id}))
+        deleteTaskTC({todolistId: props.todoListID, taskId: props.tasks.id})
     }
 
     const isDoneTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked;
         const status = newIsDoneValue ? TASK_STATUS.Completed : TASK_STATUS.New
-        dispatch(updateTaskTC({todolistId: props.todoListID, taskId: props.tasks.id, model: {status}}))
+        updateTaskTC({todolistId: props.todoListID, taskId: props.tasks.id, model: {status}})
     }
 
     const taskNewTitleHandler = (title: string) => {
-        dispatch(updateTaskTC({todolistId: props.todoListID, taskId: props.tasks.id, model: {title}}))
+        updateTaskTC({todolistId: props.todoListID, taskId: props.tasks.id, model: {title}})
     }
 
     return (

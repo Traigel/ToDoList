@@ -8,17 +8,12 @@ import IconButton from "@mui/material/IconButton/IconButton";
 import Container from "@mui/material/Container/Container";
 import Grid from "@mui/material/Grid/Grid";
 import Button from "@mui/material/Button";
-import {
-    changesFilterAC,
-    deleteToDoListTC,
-    FilterType,
-    ToDoListDomainType,
-    updateToDoListTC,
-} from "../todoList-reducer";
-import {createTaskTC, getTasksTC,} from "./Tasks/tasks-reducer";
+import {FilterType, ToDoListDomainType,} from "../todoList-reducer";
 import {TASK_STATUS} from "../../../api/api";
-import {useAppDispatch} from "../../../common/hooks/useAppDispatch";
 import {useAppSelector} from "../../../common/hooks/useAppSelector";
+import {useActions} from '../../../common/hooks/useActions';
+import {tasksActions} from './Tasks';
+import {todoListsActions} from '../index';
 
 type TodoListType = {
     todoList: ToDoListDomainType
@@ -29,29 +24,39 @@ export const ToDoList = memo((props: TodoListType) => {
     const {id, title, filter, entityStatus} = props.todoList
 
     let tasks = useAppSelector(state => state.tasks[id])
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const dispatch = useAppDispatch()
+
+    const {getTasksTC, createTaskTC} = useActions(tasksActions)
+    const {updateToDoListTC, deleteToDoListTC, changesFilter} = useActions(todoListsActions)
 
     const filterHandler = (filterItem: FilterType) => {
         if (filterItem === filter) return
-        else dispatch(changesFilterAC({toDoListID: id, filterItem}))
+        else changesFilter({toDoListID: id, filterItem})
     }
 
-    const newTitleHandler = useCallback((newTitle: string) => dispatch(createTaskTC({
-        todolistId: id,
-        title: newTitle
-    })), [dispatch])
+    const newTitleHandler = useCallback(async (newTitle: string) => {
+        createTaskTC({todolistId: id, title: newTitle})
+    }, [])
 
-    const deleteTodoListHandler = () => dispatch(deleteToDoListTC({todolistId: id}))
+    const deleteTodoListHandler = () => deleteToDoListTC({todolistId: id})
 
-    const todoListNewTitleHandler = (newTitle: string) => dispatch(updateToDoListTC({todolistId: id, title: newTitle}))
+    const todoListNewTitleHandler = (newTitle: string) => updateToDoListTC({todolistId: id, title: newTitle})
 
     if (filter === 'active') tasks = tasks.filter(el => el.status === TASK_STATUS.New)
     if (filter === 'completed') tasks = tasks.filter(el => el.status === TASK_STATUS.Completed)
 
     useEffect(() => {
-        dispatch(getTasksTC(id))
+        getTasksTC(id)
     }, [])
+
+    const renderFilterButton = (onclick: () => void, buttonFilter: FilterType, text: string) => {
+        return <Button
+            variant={filter === buttonFilter ? 'outlined' : 'contained'}
+            onClick={onclick}
+            size={"small"}
+        >
+            {text}
+        </Button>
+    }
 
     return <div className={style.item}>
         <h3>
@@ -81,29 +86,9 @@ export const ToDoList = memo((props: TodoListType) => {
         }
 
         <Container fixed>
-            <Grid container spacing={3}>
-                <Grid item>
-                    <Button
-                        variant={filter === 'all' ? 'outlined' : 'contained'}
-                        onClick={() => filterHandler('all')}
-                        size={"small"}
-                    >All</Button>
-                </Grid>
-                <Grid item>
-                    <Button
-                        variant={filter === 'active' ? 'outlined' : 'contained'}
-                        onClick={() => filterHandler('active')}
-                        size={"small"}
-                    >Active</Button>
-                </Grid>
-                <Grid item>
-                    <Button
-                        variant={filter === 'completed' ? 'outlined' : 'contained'}
-                        onClick={() => filterHandler('completed')}
-                        size={"small"}
-                    >Completed</Button>
-                </Grid>
-            </Grid>
+            {renderFilterButton(() => filterHandler('all'), 'all', 'All')}
+            {renderFilterButton(() => filterHandler('active'), 'active', 'Active')}
+            {renderFilterButton(() => filterHandler('completed'), 'completed', 'Completed')}
         </Container>
     </div>
 })

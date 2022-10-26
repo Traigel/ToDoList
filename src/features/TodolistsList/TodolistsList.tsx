@@ -2,23 +2,24 @@ import React, {useEffect} from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from "@mui/material/Paper";
 import {ToDoList} from './TodoList/ToDoList';
-import {getTodoListTC} from "./todoList-reducer";
 import {Navigate} from "react-router-dom";
-import {useAppDispatch} from "../../common/hooks/useAppDispatch";
-import {useAppSelector} from "../../common/hooks/useAppSelector";
+import {useSelector} from 'react-redux';
+import {authSelectors} from '../Auth';
+import {todoListsActions, todoListSelectors} from './index';
+import {useActions} from '../../common/hooks/useActions';
 
 
 export const TodolistsList = () => {
 
-    const dispatch = useAppDispatch()
-    const todoLists = useAppSelector(state => state.todoList)
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const {getTodoListTC} = useActions(todoListsActions)
+    const todoLists = useSelector(todoListSelectors.todoLists)
+    const isLoggedIn = useSelector(authSelectors.isLoggedIn)
 
     useEffect(() => {
         if (!isLoggedIn) {
             return
         }
-        dispatch(getTodoListTC())
+        getTodoListTC()
     }, [])
 
     if (!isLoggedIn) {
